@@ -16,7 +16,6 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`Listening port ${port}`);
 });
-
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.7wt8nwb.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
