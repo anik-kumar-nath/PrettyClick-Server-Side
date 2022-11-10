@@ -61,6 +61,14 @@ async function run() {
             const users = await cursor.toArray();
             res.send(users);
         })
+        app.get('/userreviews', async (req, res) => {
+            const query = { email: req.query.userEmail };
+            const cursor = reviewCollection.find(query).sort({ date: -1 });
+            const count = await reviewCollection.countDocuments(query);
+            const users = await cursor.toArray();
+            res.send({ users, count });
+        })
+
 
     } catch (error) {
 
