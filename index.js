@@ -49,7 +49,12 @@ async function run() {
             const service = await serviceCollection.findOne(query);
             res.send(service);
         });
-
+        app.get('/reviews', async (req, res) => {
+            const query = {};
+            const cursor = reviewCollection.find(query).sort({ date: -1 });
+            const users = await cursor.toArray();
+            res.send(users);
+        })
 
     } catch (error) {
 
