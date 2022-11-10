@@ -82,6 +82,23 @@ async function run() {
             res.send(result)
         })
 
+        app.put('/review/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const updatedUser = req.body;
+            console.log(updatedUser);
+            const option = { upsert: true };
+            const date = new Date();
+            const updatedUserOperation = {
+                $set: {
+                    reviewText: updatedUser.comment,
+                    date: date
+                }
+            }
+            const result = await reviewCollection.updateOne(query, updatedUserOperation, option)
+            res.send(result)
+        })
+
     } catch (error) {
 
     }
