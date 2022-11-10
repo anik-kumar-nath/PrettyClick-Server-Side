@@ -68,6 +68,13 @@ async function run() {
             const users = await cursor.toArray();
             res.send({ users, count });
         })
+        app.post('/review', async (req, res) => {
+            const user = req.body;
+            user.date = new Date();
+            console.log(user);
+            const result = await reviewCollection.insertOne(user);
+            res.send(result);
+        })
 
 
     } catch (error) {
