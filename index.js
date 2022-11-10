@@ -55,6 +55,12 @@ async function run() {
             const users = await cursor.toArray();
             res.send(users);
         })
+        app.get('/servicereviews', async (req, res) => {
+            const query = { serviceId: req.query.serviceid };
+            const cursor = reviewCollection.find(query).sort({ date: -1 });
+            const users = await cursor.toArray();
+            res.send(users);
+        })
 
     } catch (error) {
 
