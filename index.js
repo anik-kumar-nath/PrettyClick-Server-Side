@@ -1,6 +1,9 @@
+// const Services = require('./Services.json')
+
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config()
+
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -16,12 +19,23 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`Listening port ${port}`);
 });
+
+
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.7wt8nwb.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 async function run() {
     try {
+        const serviceCollection = client.db('Assignment-11').collection('Services');
+        const reviewCollection = client.db('Assignment-11').collection('Reviews');
 
+        app.get('/recentservice', async (req, res) => {
+            const query = {};
+            const cursor = serviceCollection.find(query).limit(3);
+            const users = await cursor.toArray();
+            res.send(users);
+        })
 
     } catch (error) {
 
