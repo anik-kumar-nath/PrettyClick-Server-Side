@@ -1,5 +1,3 @@
-// const Services = require('./Services.json')
-
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config()
@@ -44,8 +42,6 @@ async function run() {
         })
         app.post('/services', async (req, res) => {
             const service = req.body;
-            // user.date = new Date();
-            console.log(service);
             const result = await serviceCollection.insertOne(service);
             res.send(result);
         })
@@ -78,7 +74,6 @@ async function run() {
         app.post('/review', async (req, res) => {
             const user = req.body;
             user.date = new Date();
-            console.log(user);
             const result = await reviewCollection.insertOne(user);
             res.send(result);
         })
@@ -93,7 +88,6 @@ async function run() {
             const id = req.params.id;
             const query = { _id: ObjectId(id) }
             const updatedUser = req.body;
-            console.log(updatedUser);
             const option = { upsert: true };
             const date = new Date();
             const updatedUserOperation = {
