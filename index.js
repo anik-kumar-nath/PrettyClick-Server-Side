@@ -34,12 +34,18 @@ async function run() {
             const users = await cursor.toArray();
             res.send(users);
         })
+
         app.get('/services', async (req, res) => {
+            const pageNo = req.query.page;
+            const pageItems = req.query.size;
+            // console.log(req.query)
             const query = {};
             const cursor = serviceCollection.find(query);
-            const users = await cursor.toArray();
-            res.send(users);
+            const count = await serviceCollection.countDocuments(query)
+            const services = await cursor.skip(pageNo * 1 * pageItems * 1).limit(pageItems * 1).toArray();
+            res.send({ count, services });
         })
+
         app.post('/services', async (req, res) => {
             const service = req.body;
             const result = await serviceCollection.insertOne(service);
